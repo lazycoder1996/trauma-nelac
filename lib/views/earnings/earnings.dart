@@ -36,9 +36,9 @@ class _EarningsState extends State<Earnings> {
         title: const Text('Earnings'),
       ),
       body: GetBuilder<EarningController>(builder: (eController) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
+        return Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 CustomButton(

@@ -43,16 +43,16 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         style: blackBold(16),
                       ),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: ListView.builder(
-                        itemCount: tController.transactions!.length,
-                        itemBuilder: (context, index) {
-                          TransactionBody transaction =
-                              tController.transactions![index];
-                          return TransactionCard(transaction: transaction);
-                        },
-                      ),
+                  : ListView.builder(
+                      itemCount: tController.transactions!.length,
+                      itemBuilder: (context, index) {
+                        TransactionBody transaction =
+                            tController.transactions![index];
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                          child: TransactionCard(transaction: transaction),
+                        );
+                      },
                     );
         },
       ),

@@ -56,16 +56,15 @@ class _ManagementScreenState extends State<ManagementScreen> {
                           style: blackBold(16),
                         ),
                       )
-                    : Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: ListView.builder(
-                          itemCount: mController.managements!.length,
-                          itemBuilder: (context, index) {
-                            ManagementBody mngt =
-                                mController.managements![index];
-                            return ManagementCard(mngt: mngt);
-                          },
-                        ),
+                    : ListView.builder(
+                        itemCount: mController.managements!.length,
+                        itemBuilder: (context, index) {
+                          ManagementBody mngt = mController.managements![index];
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                            child: ManagementCard(mngt: mngt),
+                          );
+                        },
                       );
           },
         ),

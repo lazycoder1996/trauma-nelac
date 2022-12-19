@@ -51,15 +51,15 @@ class _LoanScreenState extends State<LoanScreen> {
                         style: blackBold(16),
                       ),
                     )
-                  : Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: ListView.builder(
-                        itemCount: lController.loans!.length,
-                        itemBuilder: (context, index) {
-                          LoanBody loan = lController.loans![index];
-                          return LoanCard(loan: loan);
-                        },
-                      ),
+                  : ListView.builder(
+                      itemCount: lController.loans!.length,
+                      itemBuilder: (context, index) {
+                        LoanBody loan = lController.loans![index];
+                        return Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                          child: LoanCard(loan: loan),
+                        );
+                      },
                     );
         },
       ),
