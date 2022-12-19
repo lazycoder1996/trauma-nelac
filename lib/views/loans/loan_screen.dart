@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nelac_eazy/controllers/loan_controller.dart';
+import 'package:nelac_eazy/data/body/loan_body.dart';
 import 'package:nelac_eazy/views/loans/add_loan.dart';
+
+import '../../utils/styles.dart';
+import 'loan_card.dart';
 
 class LoanScreen extends StatefulWidget {
   const LoanScreen({super.key});
@@ -9,6 +15,16 @@ class LoanScreen extends StatefulWidget {
 }
 
 class _LoanScreenState extends State<LoanScreen> {
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  init() async {
+    await Get.find<LoanController>().getLoans();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,12 +38,31 @@ class _LoanScreenState extends State<LoanScreen> {
       appBar: AppBar(
         title: const Text('Loans'),
       ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(15.0),
-      //   child: ListView(
-      //     children: List.generate(3, (index) => LoanCard(loan: loan)),
-      //   ),
-      // ),
+      body: GetBuilder<LoanController>(
+        builder: (lController) {
+          return lController.loading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : lController.loans!.isEmpty
+                  ? Center(
+                      child: Text(
+                        'No Loans',
+                        style: blackBold(16),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: ListView.builder(
+                        itemCount: lController.loans!.length,
+                        itemBuilder: (context, index) {
+                          LoanBody loan = lController.loans![index];
+                          return LoanCard(loan: loan);
+                        },
+                      ),
+                    );
+        },
+      ),
     );
   }
 }

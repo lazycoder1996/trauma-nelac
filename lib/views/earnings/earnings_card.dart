@@ -24,28 +24,31 @@ class EarningCard extends StatelessWidget {
           children: [
             Text(
               earning.date!,
-              style: blackBold(15),
             ),
-            h(5),
+            h(10),
             Row(
               children: [
-                Text(
+                const Text(
                   'Amt. Received',
-                  style: blackBold(14),
                 ),
                 const Spacer(),
-                Text('GH¢ ${earning.total!.toStringAsFixed(2)}')
+                Text(
+                  'GH¢ ${earning.total!.toStringAsFixed(2)}',
+                  style: blackBold(14),
+                )
               ],
             ),
             h(10),
             Row(
               children: [
-                Text(
+                const Text(
                   'Earnings',
-                  style: blackBold(14),
                 ),
                 const Spacer(),
-                Text('GH¢ ${earning.charges!.toStringAsFixed(2)}')
+                Text(
+                  'GH¢ ${earning.charges!.toStringAsFixed(2)}',
+                  style: blackBold(14),
+                )
               ],
             ),
           ],

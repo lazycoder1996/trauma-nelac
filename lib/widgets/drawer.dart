@@ -5,6 +5,7 @@ import 'package:nelac_eazy/utils/navigation.dart';
 import 'package:nelac_eazy/utils/styles.dart';
 import 'package:nelac_eazy/views/earnings/earnings.dart';
 import 'package:nelac_eazy/views/loans/loan_screen.dart';
+import 'package:nelac_eazy/views/management/management.dart';
 import 'package:nelac_eazy/views/transactions/transaction.dart';
 import 'package:nelac_eazy/widgets/sizedbox.dart';
 
@@ -32,6 +33,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           h(20),
+          DrawerItem(
+            leadingIcon: Images.management,
+            onTap: () {
+              toScreen(context, const ManagementScreen());
+            },
+            title: 'Management',
+          ),
           DrawerItem(
             leadingIcon: Images.transactions,
             onTap: () {

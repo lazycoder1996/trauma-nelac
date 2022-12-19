@@ -6,4 +6,5 @@ class Images {
   static String loans = "${basePath}loans.svg";
   static String paid = "${basePath}paid.svg";
   static String pending = "${basePath}pending.svg";
+  static String management = "${basePath}management.svg";
 }

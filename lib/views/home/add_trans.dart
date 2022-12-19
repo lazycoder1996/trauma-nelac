@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:nelac_eazy/controllers/transaction_controller.dart';
 import 'package:nelac_eazy/data/body/transaction_body.dart';
+import 'package:nelac_eazy/utils/constants.dart';
 import 'package:nelac_eazy/utils/convert_amount.dart';
 import 'package:nelac_eazy/utils/convert_date.dart';
 import 'package:nelac_eazy/utils/navigation.dart';
@@ -10,6 +12,8 @@ import 'package:nelac_eazy/widgets/button.dart';
 import 'package:nelac_eazy/widgets/dropdown.dart';
 import 'package:nelac_eazy/widgets/sizedbox.dart';
 import 'package:nelac_eazy/widgets/textfield.dart';
+
+import '../../controllers/management_controller.dart';
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction({super.key});
@@ -23,6 +27,7 @@ class _AddTransactionState extends State<AddTransaction> {
   TextEditingController amount = TextEditingController();
   TextEditingController charges = TextEditingController();
   String type = 'Received';
+  List<String> types = ['Received', 'Cash out', 'Cash in'];
 
   String? validator(String? val) {
     if (val!.isEmpty) {
@@ -59,13 +64,27 @@ class _AddTransactionState extends State<AddTransaction> {
                   amount: convert(text: amount),
                   date: date(),
                   charges: convert(text: charges),
-                  paid: 0,
-                  receiver: '',
+                  paid: type == types[1] ? 1 : 0,
+                  receiver: type == types[1] ? AppConstants.name : '',
                   sender: sender.text.trim(),
                   type: type,
+                  monthYear: DateFormat().add_yMMM().format(DateTime.now()),
                 ),
               )
-                  .then((value) {
+                  .then((value) async {
+                var m = Get.find<ManagementController>();
+                if (type == types[1] || type == types[0]) {
+                  // received and cash out
+                  await m.updateECash(convert(text: amount), true);
+                  await m.updatePCash(
+                      convert(text: amount) - convert(text: charges), false);
+                  await m.updateReceived();
+                } else {
+                  // cash in
+                  await m.updateECash(convert(text: amount), false);
+                  await m.updatePCash(convert(text: amount), true);
+                  await m.updateCashOut();
+                }
                 Fluttertoast.showToast(msg: 'Added');
                 pop(context);
               });
@@ -96,7 +115,7 @@ class _AddTransactionState extends State<AddTransaction> {
             h(10),
             CustomDropdown(
                 value: type,
-                items: const ['Received', 'Cash out'],
+                items: types,
                 label: 'Type',
                 onChanged: (val) {
                   setState(() {

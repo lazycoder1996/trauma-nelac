@@ -25,13 +25,16 @@ class _EarningsState extends State<Earnings> {
   }
 
   Future<void> init() async {
-    await Get.find<EarningController>().getEarnings();
+    await Get.find<EarningController>().getEarnings(
+        DateFormat().add_yMMM().format(selectedDate ?? DateTime.now()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Earnings')),
+      appBar: AppBar(
+        title: const Text('Earnings'),
+      ),
       body: GetBuilder<EarningController>(builder: (eController) {
         return SingleChildScrollView(
           child: Padding(
@@ -62,27 +65,42 @@ class _EarningsState extends State<Earnings> {
                         'Cancel',
                         style: blackBold(14, Colors.red),
                       ),
-                    ).then((date) {
+                    ).then((date) async {
                       if (date != null) {
                         setState(() {
                           selectedDate = date;
                         });
+                        await Get.find<EarningController>().getEarnings(
+                          DateFormat().add_yMMM().format(selectedDate!),
+                        );
                       }
                     });
                   },
                 ),
-                if (eController.earnings != null)
-                  LimitedBox(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: eController.earnings!.length,
-                      itemBuilder: (context, index) {
-                        EarningBody earning = eController.earnings![index];
-                        return EarningCard(earning: earning);
-                      },
-                    ),
-                  ),
+                const SizedBox(
+                  height: 15,
+                ),
+                eController.loading
+                    ? const CircularProgressIndicator()
+                    : eController.earnings!.isEmpty
+                        ? Center(
+                            child: Text(
+                              'No earnings for this month',
+                              style: blackBold(16),
+                            ),
+                          )
+                        : LimitedBox(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              primary: false,
+                              itemCount: eController.earnings!.length,
+                              itemBuilder: (context, index) {
+                                EarningBody earning =
+                                    eController.earnings![index];
+                                return EarningCard(earning: earning);
+                              },
+                            ),
+                          ),
               ],
             ),
           ),

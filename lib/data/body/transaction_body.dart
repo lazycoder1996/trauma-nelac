@@ -9,6 +9,7 @@ class TransactionBody {
   double? charges;
   String? date;
   String? type;
+  String? monthYear;
   TransactionBody({
     this.id,
     this.date,
@@ -18,6 +19,7 @@ class TransactionBody {
     this.charges,
     this.amount,
     this.type,
+    this.monthYear,
   });
   TransactionBody.fromMap(Map<dynamic, dynamic> json) {
     id = json['id'];
@@ -28,6 +30,7 @@ class TransactionBody {
     charges = json['charges'];
     date = stripDate(json['date']);
     type = json['type'];
+    monthYear = json['month_year'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +43,7 @@ class TransactionBody {
     json['charges'] = charges;
     json['date'] = date;
     json['type'] = type;
+    json['month_year'] = monthYear;
     return json;
   }
 }

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:nelac_eazy/theme/theme.dart';
 import 'package:nelac_eazy/views/splash/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'db/db.dart' as database;
 import 'helper/get_di.dart' as di;
 
 late Database db;
+late SharedPreferences prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   db = await database.init();
   await di.init();
+  prefs = await SharedPreferences.getInstance();
+
   runApp(const MyApp());
 }
 

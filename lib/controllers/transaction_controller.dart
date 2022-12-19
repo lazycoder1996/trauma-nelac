@@ -37,9 +37,11 @@ class TransactionController extends GetxController implements GetxService {
         await Get.find<EarningController>().insertEarning(
           txn,
           EarningBody(
-              total: transaction.amount,
-              date: transaction.date!,
-              charges: transaction.charges),
+            total: transaction.amount,
+            date: transaction.date!,
+            charges: transaction.charges,
+            monthYear: transaction.monthYear,
+          ),
         );
       } else {
         await Get.find<EarningController>().updateEarning(
@@ -52,5 +54,13 @@ class TransactionController extends GetxController implements GetxService {
     });
   }
 
-  Future<void> updateTransaction() async {}
+  Future<void> updateTransaction(Map<String, dynamic> values, int id) async {
+    await db.update(
+      AppConstants.transactions,
+      values,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    await getTransactions();
+  }
 }

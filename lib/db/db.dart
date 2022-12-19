@@ -8,13 +8,16 @@ Future<Database> init() async {
   db ??= await openDatabase(path, version: 1,
       onCreate: (Database db, int version) async {
     await db.execute('''
-      CREATE TABLE transactions(id INTEGER PRIMARY KEY, sender TEXT, receiver TEXT, type TEXT, amount REAL, charges REAL, date TEXT, paid INTEGER)
+      CREATE TABLE transactions(id INTEGER PRIMARY KEY, sender TEXT, receiver TEXT, type TEXT, amount REAL, charges REAL, date TEXT, paid INTEGER, month_year TEXT)
     ''');
     await db.execute('''
     CREATE TABLE loans(id INTEGER PRIMARY KEY, lender TEXT, amount REAL, date TEXT, paid INTEGER)
     ''');
     await db.execute('''
-    CREATE TABLE earnings(id INTEGER PRIMARY KEY, total REAL, charges REAL, date TEXT)
+    CREATE TABLE earnings(id INTEGER PRIMARY KEY, total REAL, charges REAL, date TEXT, month_year TEXT)
+    ''');
+    await db.execute('''
+    CREATE TABLE management(id INTEGER PRIMARY KEY, type TEXT, amount REAL, date TEXT)
     ''');
   });
 

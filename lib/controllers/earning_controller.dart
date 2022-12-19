@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:nelac_eazy/data/body/earning_body.dart';
 import 'package:nelac_eazy/utils/constants.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../main.dart';
 
@@ -14,10 +14,14 @@ class EarningController extends GetxController implements GetxService {
 
   bool get loading => _loading;
 
-  Future<void> getEarnings() async {
+  Future<void> getEarnings(String? date) async {
     _loading = true;
     update();
-    List<Map> rows = await db.query(AppConstants.earnings);
+    List<Map> rows = await db.query(
+      AppConstants.earnings,
+      whereArgs: [date],
+      where: 'month_year = ?',
+    );
     print(rows);
     _earnings = List.generate(rows.length,
         (index) => EarningBody.fromMap(rows.reversed.toList()[index]));
