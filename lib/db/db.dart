@@ -17,7 +17,7 @@ Future<Database> init() async {
     CREATE TABLE earnings(id INTEGER PRIMARY KEY, total REAL, charges REAL, date TEXT, month_year TEXT)
     ''');
     await db.execute('''
-    CREATE TABLE management(id INTEGER PRIMARY KEY, type TEXT, amount REAL, date TEXT)
+    CREATE TABLE management(id INTEGER PRIMARY KEY, type TEXT, merchant_name TEXT, amount REAL, date TEXT)
     ''');
   });
 

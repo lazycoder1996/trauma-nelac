@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Trauma Nelac Eazy',
-      home: const SafeArea(child: SplashScreen()),
+      home: const SplashScreen(),
       theme: light.copyWith(
         inputDecorationTheme: InputDecorationTheme(
           labelStyle: const TextStyle(color: Colors.black),

@@ -27,41 +27,43 @@ class _LoanScreenState extends State<LoanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showDialog(
-              context: context, builder: (context) => const AddLoanDialog());
-        },
-      ),
-      appBar: AppBar(
-        title: const Text('Loans'),
-      ),
-      body: GetBuilder<LoanController>(
-        builder: (lController) {
-          return lController.loading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : lController.loans!.isEmpty
-                  ? Center(
-                      child: Text(
-                        'No Loans',
-                        style: blackBold(16),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: lController.loans!.length,
-                      itemBuilder: (context, index) {
-                        LoanBody loan = lController.loans![index];
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-                          child: LoanCard(loan: loan),
-                        );
-                      },
-                    );
-        },
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            showDialog(
+                context: context, builder: (context) => const AddLoanDialog());
+          },
+        ),
+        appBar: AppBar(
+          title: const Text('Loans'),
+        ),
+        body: GetBuilder<LoanController>(
+          builder: (lController) {
+            return lController.loading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : lController.loans!.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No Loans',
+                          style: blackBold(16),
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: lController.loans!.length,
+                        itemBuilder: (context, index) {
+                          LoanBody loan = lController.loans![index];
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+                            child: LoanCard(loan: loan),
+                          );
+                        },
+                      );
+          },
+        ),
       ),
     );
   }

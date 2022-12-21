@@ -16,12 +16,14 @@ class TransactionController extends GetxController implements GetxService {
 
   bool get loading => _loading;
 
-  Future<void> getTransactions() async {
+  Future<void> getTransactions([String? date]) async {
     _loading = true;
     update();
-    List<Map> rows = await db.query(AppConstants.transactions);
-
-    print(rows);
+    List<Map> rows = await db.query(
+      AppConstants.transactions,
+      whereArgs: date == null ? [] : [date],
+      where: date == null ? null : 'month_year = ?',
+    );
     _transactions = List.generate(rows.length,
         (index) => TransactionBody.fromMap(rows.reversed.toList()[index]));
     _loading = false;

@@ -30,9 +30,19 @@ class ManagementCard extends StatelessWidget {
                   mngt.date!,
                 ),
                 h(10),
-                Text(
-                  mngt.type!,
-                  style: blackBold(13.5),
+                Row(
+                  children: [
+                    Text(
+                      mngt.type!,
+                      style: blackBold(13.5),
+                    ),
+                    w(15),
+                    if (mngt.merchantName!.isNotEmpty)
+                      Text(
+                        'To: ${mngt.merchantName!}',
+                        style: blackBold(13.5),
+                      ),
+                  ],
                 ),
                 h(10),
                 Text(

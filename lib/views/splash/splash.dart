@@ -35,31 +35,33 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(Images.logo),
-            h(100),
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: LinearProgressIndicator(
-                  minHeight: 20,
-                  value: counter / 60,
-                  color: Colors.white,
-                  backgroundColor: Colors.black,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(Images.logo),
+              h(100),
+              Container(
+                width: 200,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-              ),
-            )
-          ],
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: LinearProgressIndicator(
+                    minHeight: 20,
+                    value: counter / 60,
+                    color: Colors.white,
+                    backgroundColor: Colors.black,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

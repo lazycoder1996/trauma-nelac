@@ -57,37 +57,39 @@ class _AddTransactionState extends State<AddTransaction> {
             bgColor: Colors.black,
             fgColor: Colors.white,
             onPressed: () async {
-              FocusScope.of(context).unfocus();
-              await Get.find<TransactionController>()
-                  .insertTransaction(
-                TransactionBody(
-                  amount: convert(text: amount),
-                  date: date(),
-                  charges: convert(text: charges),
-                  paid: type == types[1] ? 1 : 0,
-                  receiver: type == types[1] ? AppConstants.name : '',
-                  sender: sender.text.trim(),
-                  type: type,
-                  monthYear: DateFormat().add_yMMM().format(DateTime.now()),
-                ),
-              )
-                  .then((value) async {
-                var m = Get.find<ManagementController>();
-                if (type == types[1] || type == types[0]) {
-                  // received and cash out
-                  await m.updateECash(convert(text: amount), true);
-                  await m.updatePCash(
-                      convert(text: amount) - convert(text: charges), false);
-                  await m.updateReceived();
-                } else {
-                  // cash in
-                  await m.updateECash(convert(text: amount), false);
-                  await m.updatePCash(convert(text: amount), true);
-                  await m.updateCashOut();
-                }
-                Fluttertoast.showToast(msg: 'Added');
-                pop(context);
-              });
+              if (formKey.currentState!.validate()) {
+                FocusScope.of(context).unfocus();
+                await Get.find<TransactionController>()
+                    .insertTransaction(
+                  TransactionBody(
+                    amount: convert(text: amount),
+                    date: date(),
+                    charges: convert(text: charges),
+                    paid: type == types[1] ? 1 : 0,
+                    receiver: type == types[1] ? AppConstants.name : '',
+                    sender: sender.text.trim(),
+                    type: type,
+                    monthYear: DateFormat().add_yMMM().format(DateTime.now()),
+                  ),
+                )
+                    .then((value) async {
+                  var m = Get.find<ManagementController>();
+                  if (type == types[1] || type == types[0]) {
+                    // received and cash out
+                    await m.updateECash(convert(text: amount), true);
+                    await m.updatePCash(
+                        convert(text: amount) - convert(text: charges), false);
+                    await m.updateReceived();
+                  } else {
+                    // cash in
+                    await m.updateECash(convert(text: amount), false);
+                    await m.updatePCash(convert(text: amount), true);
+                    await m.updateCashOut();
+                  }
+                  Fluttertoast.showToast(msg: 'Added');
+                  pop(context);
+                });
+              }
             },
           ),
         ],
@@ -114,6 +116,7 @@ class _AddTransactionState extends State<AddTransaction> {
             ),
             h(10),
             CustomDropdown(
+                validator: (val) => validator(val),
                 value: type,
                 items: types,
                 label: 'Type',
@@ -134,7 +137,9 @@ class _AddTransactionState extends State<AddTransaction> {
               keyboardType: TextInputType.number,
               controller: charges,
               label: 'Charges',
-              validator: (val) => validator(val),
+              validator: (val) {
+                return type == types[0] ? validator(val) : null;
+              },
             ),
           ],
         ),

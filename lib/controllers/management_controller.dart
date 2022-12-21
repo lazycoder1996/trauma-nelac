@@ -50,12 +50,14 @@ class ManagementController extends GetxController implements GetxService {
   int get cashOut => _cashOut;
 
   updateReceived() async {
-    await prefs.setInt(AppConstants.received, _received++);
+    _received += 1;
+    await prefs.setInt(AppConstants.received, _received);
     update();
   }
 
   updateCashOut() async {
-    await prefs.setInt(AppConstants.cashOut, _cashOut++);
+    _cashOut += 1;
+    await prefs.setInt(AppConstants.cashOut, _cashOut);
     update();
   }
 
@@ -75,7 +77,6 @@ class ManagementController extends GetxController implements GetxService {
     update();
     List<Map> rows = await db.query(AppConstants.management);
 
-    print(rows);
     _managements = List.generate(rows.length,
         (index) => ManagementBody.fromMap(rows.reversed.toList()[index]));
     _loading = false;
