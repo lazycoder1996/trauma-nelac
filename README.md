@@ -1,6 +1,7 @@
 # nelac_eazy
 
-A new Flutter project.
+A mobile application to manage the financial transactions
+of Trauma Nelac Eazy Company
 
 ## Getting Started
 

@@ -65,9 +65,15 @@ class _AddTransactionState extends State<AddTransaction> {
                     amount: convert(text: amount),
                     date: date(),
                     charges: convert(text: charges),
-                    paid: type == types[1] ? 1 : 0,
-                    receiver: type == types[1] ? AppConstants.name : '',
-                    sender: sender.text.trim(),
+                    paid: types.sublist(1).contains(type) ? 1 : 0,
+                    receiver: type == types[2]
+                        ? sender.text.trim()
+                        : type == types[1]
+                            ? AppConstants.name
+                            : '',
+                    sender: type == types[2]
+                        ? AppConstants.name
+                        : sender.text.trim(),
                     type: type,
                     monthYear: DateFormat().add_yMMM().format(DateTime.now()),
                   ),
@@ -111,7 +117,7 @@ class _AddTransactionState extends State<AddTransaction> {
           children: [
             CustomTextField(
               controller: sender,
-              label: 'Sender',
+              label: type == types[2] ? 'Receiver' : 'Sender',
               validator: (val) => validator(val),
             ),
             h(10),
@@ -133,12 +139,13 @@ class _AddTransactionState extends State<AddTransaction> {
               validator: (val) => validator(val),
             ),
             h(10),
+            if(type == types[0])
             CustomTextField(
               keyboardType: TextInputType.number,
               controller: charges,
               label: 'Charges',
               validator: (val) {
-                return type == types[0] ? validator(val) : null;
+                return validator(val);
               },
             ),
           ],

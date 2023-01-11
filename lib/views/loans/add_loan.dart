@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:nelac_eazy/controllers/loan_controller.dart';
+import 'package:nelac_eazy/controllers/management_controller.dart';
 import 'package:nelac_eazy/data/body/loan_body.dart';
 import 'package:nelac_eazy/utils/convert_amount.dart';
 import 'package:nelac_eazy/utils/convert_date.dart';
@@ -43,7 +44,7 @@ class _AddLoanDialogState extends State<AddLoanDialog> {
             fgColor: Colors.white,
             onPressed: () async {
               if (formKey.currentState!.validate()) {
-                Get.find<LoanController>()
+                await Get.find<LoanController>()
                     .insertLoan(
                   LoanBody(
                       paid: 0,
@@ -51,7 +52,10 @@ class _AddLoanDialogState extends State<AddLoanDialog> {
                       amount: convert(text: amount),
                       lender: lender.text.trim()),
                 )
-                    .then((value) {
+                    .then((value) async {
+                  await Get.find<ManagementController>()
+                      .updatePCash(convert(text: amount), true);
+
                   Fluttertoast.showToast(msg: 'Added');
                   pop(context);
                 });

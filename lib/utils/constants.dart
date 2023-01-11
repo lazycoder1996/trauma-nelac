@@ -10,6 +10,16 @@ class AppConstants {
   static String pCash = 'pCash';
   static String received = 'received';
   static String cashOut = 'cashOut';
+  static List<String> clearData = [
+    transactions,
+    management,
+    earnings,
+    loans,
+    eCash,
+    pCash,
+    received,
+    cashOut,
+  ];
 }
 
 Color appColor = Colors.black;

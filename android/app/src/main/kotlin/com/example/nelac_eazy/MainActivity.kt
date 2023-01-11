@@ -1,4 +1,4 @@
-package com.example.nelac_eazy
+package com.lazycoderthings.nelac
 
 import io.flutter.embedding.android.FlutterActivity
 

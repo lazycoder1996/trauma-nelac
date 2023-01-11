@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.nelac_eazy">
+    package="com.lazycoderthings.nelac">
    <application
         android:label="NElac EaZY"
         android:name="${applicationName}"
