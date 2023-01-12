@@ -37,8 +37,8 @@ class TransactionController extends GetxController implements GetxService {
           .query(AppConstants.earnings, where: 'date = ?', whereArgs: [date()]);
       if (list.isEmpty) {
         await Get.find<EarningController>().insertEarning(
-          txn,
-          EarningBody(
+          txn: txn,
+          earning: EarningBody(
             total: transaction.amount,
             date: transaction.date!,
             charges: transaction.charges,

@@ -4,12 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:nelac_eazy/controllers/management_controller.dart';
 import 'package:nelac_eazy/utils/constants.dart';
 import 'package:nelac_eazy/utils/styles.dart';
-import 'package:nelac_eazy/views/home/add_trans.dart';
 import 'package:nelac_eazy/views/home/cards.dart';
 import 'package:nelac_eazy/widgets/drawer.dart';
 import 'package:nelac_eazy/widgets/sizedbox.dart';
 
 import '../../main.dart';
+import '../transactions/add_trans.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -37,7 +37,9 @@ class _HomepageState extends State<Homepage> {
           child: const Icon(Icons.add),
           onPressed: () {
             showDialog(
-                context: context, builder: (context) => const AddTransaction());
+              context: context,
+              builder: (context) => const AddTransaction(),
+            );
           },
         ),
         drawer: const CustomDrawer(),

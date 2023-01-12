@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:month_picker_dialog_2/month_picker_dialog_2.dart';
 import 'package:nelac_eazy/controllers/earning_controller.dart';
 import 'package:nelac_eazy/data/body/earning_body.dart';
+import 'package:nelac_eazy/utils/images.dart';
 import 'package:nelac_eazy/utils/styles.dart';
 import 'package:nelac_eazy/views/earnings/earnings_card.dart';
 import 'package:nelac_eazy/widgets/button.dart';
+
+import 'commission_dialog.dart';
 
 class Earnings extends StatefulWidget {
   const Earnings({super.key});
@@ -47,6 +51,16 @@ class _EarningsState extends State<Earnings> {
         appBar: AppBar(
           title: const Text('Earnings'),
           actions: [
+            IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => CommissionDialog(
+                          date: selectedDate ?? DateTime.now(),
+                        ));
+              },
+              icon: SvgPicture.asset(Images.commission),
+            ),
             IconButton(
               onPressed: () async {
                 setState(() {
@@ -137,10 +151,14 @@ class _EarningsState extends State<Earnings> {
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   primary: false,
-                                  itemCount: eController.earnings!.length,
+                                  itemCount: eController.earnings!
+                                      .where((element) => element.total != 0)
+                                      .toList()
+                                      .length,
                                   itemBuilder: (context, index) {
-                                    EarningBody earning =
-                                        eController.earnings![index];
+                                    EarningBody earning = eController.earnings!
+                                        .where((element) => element.total != 0)
+                                        .toList()[index];
                                     return EarningCard(earning: earning);
                                   },
                                 ),

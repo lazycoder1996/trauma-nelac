@@ -22,16 +22,25 @@ class EarningController extends GetxController implements GetxService {
       whereArgs: date == null ? [] : [date],
       where: date == null ? null : 'month_year = ?',
     );
-    _earnings = List.generate(rows.length,
-        (index) => EarningBody.fromMap(rows.reversed.toList()[index]));
+    _earnings = List.generate(
+      rows.length,
+      (index) => EarningBody.fromMap(
+        rows.reversed.toList()[index],
+      ),
+    );
+    // .where((element) => element.total != 0).toList();
     _loading = false;
     update();
   }
 
-  Future<void> insertEarning(Transaction txn, EarningBody earning) async {
-    // await db.transaction((txn) async {
-    await txn.insert(AppConstants.earnings, earning.toJson());
-    // });
+  Future<void> insertEarning(
+      {Transaction? txn, required EarningBody earning}) async {
+    await db.transaction((_txn) async {
+      if (txn != null) {
+        await txn.insert(AppConstants.earnings, earning.toJson());
+        return;
+      }
+    });
   }
 
   Future<void> updateEarning(

@@ -23,6 +23,7 @@ class _AddManagementState extends State<AddManagement> {
   List<String> actions = [
     'Pay e-Cash',
     'Add Physical Cash',
+    'Add Electronic Cash'
   ];
   String value = 'Add Physical Cash';
   TextEditingController amount = TextEditingController();
@@ -70,9 +71,12 @@ class _AddManagementState extends State<AddManagement> {
                     await mController.updateECash(convert(text: amount), false);
                   } else if (value == actions[1]) {
                     await mController.updatePCash(convert(text: amount), true);
+                  } else if (value == actions[2]) {
+                    await mController.updateECash(convert(text: amount), true);
                   }
                   await mController.getManagements();
                   Fluttertoast.showToast(msg: 'Added');
+                  if (!mounted) return;
                   pop(context);
                 }
               },
