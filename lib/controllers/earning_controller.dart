@@ -34,13 +34,13 @@ class EarningController extends GetxController implements GetxService {
   }
 
   Future<void> insertEarning(
-      {Transaction? txn, required EarningBody earning}) async {
-    await db.transaction((_txn) async {
-      if (txn != null) {
-        await txn.insert(AppConstants.earnings, earning.toJson());
-        return;
-      }
-    });
+      {required Transaction txn, required EarningBody earning}) async {
+    // await db.transaction((_txn) async {
+    //   if (txn != null) {
+    await txn.insert(AppConstants.earnings, earning.toJson());
+    //   return;
+    // }
+    // });
   }
 
   Future<void> updateEarning(

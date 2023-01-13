@@ -115,12 +115,6 @@ class _AddTransactionState extends State<AddTransaction> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomTextField(
-              controller: sender,
-              label: type == types[2] ? 'Receiver' : 'Sender',
-              validator: (val) => validator(val),
-            ),
-            h(10),
             CustomDropdown(
                 validator: (val) => validator(val),
                 value: type,
@@ -133,21 +127,27 @@ class _AddTransactionState extends State<AddTransaction> {
                 }),
             h(10),
             CustomTextField(
+              controller: sender,
+              label: type == types[2] ? 'Receiver' : 'Sender',
+              validator: (val) => validator(val),
+            ),
+            h(10),
+            CustomTextField(
               keyboardType: TextInputType.number,
               controller: amount,
               label: 'Amount',
               validator: (val) => validator(val),
             ),
             h(10),
-            if(type == types[0])
-            CustomTextField(
-              keyboardType: TextInputType.number,
-              controller: charges,
-              label: 'Charges',
-              validator: (val) {
-                return validator(val);
-              },
-            ),
+            if (type == types[0])
+              CustomTextField(
+                keyboardType: TextInputType.number,
+                controller: charges,
+                label: 'Charges',
+                validator: (val) {
+                  return validator(val);
+                },
+              ),
           ],
         ),
       ),

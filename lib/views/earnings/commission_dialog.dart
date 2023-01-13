@@ -116,7 +116,9 @@ class _CommissionDialogState extends State<CommissionDialog> {
                     await db.transaction((txn) async {
                       await txn.insert(AppConstants.earnings, earning.toJson());
                     });
-
+                    // await Get.find<EarningController>()
+                    //     .insertEarning(earning: earning);
+                    //
                     await Get.find<EarningController>().getEarnings(
                         DateFormat().add_yMMM().format(widget.date));
                     if (!mounted) return;
