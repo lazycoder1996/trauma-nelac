@@ -48,7 +48,7 @@ class EarningCard extends StatelessWidget {
                 Text(
                   'GH¢ ${earning.charges!.toStringAsFixed(2)}',
                   style: blackBold(14),
-                )
+                ),
               ],
             ),
           ],

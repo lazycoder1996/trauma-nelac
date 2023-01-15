@@ -30,6 +30,12 @@ class TransactionController extends GetxController implements GetxService {
     update();
   }
 
+  Future<void> delete(TransactionBody body) async {
+    await db.delete(AppConstants.transactions,
+        whereArgs: [body.id], where: 'id = ?');
+    update();
+  }
+
   Future<void> insertTransaction(TransactionBody transaction) async {
     await db.transaction((txn) async {
       txn.insert(AppConstants.transactions, transaction.toJson());

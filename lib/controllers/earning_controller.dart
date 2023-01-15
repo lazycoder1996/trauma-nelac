@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nelac_eazy/data/body/earning_body.dart';
+import 'package:nelac_eazy/data/body/transaction_body.dart';
 import 'package:nelac_eazy/utils/constants.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -41,6 +42,15 @@ class EarningController extends GetxController implements GetxService {
     //   return;
     // }
     // });
+  }
+
+  Future<void> delete(TransactionBody body) async {
+    await db.delete(
+      AppConstants.earnings,
+      where: 'id = ?',
+      whereArgs: [body.id],
+    );
+    update();
   }
 
   Future<void> updateEarning(

@@ -93,6 +93,7 @@ class _AddTransactionState extends State<AddTransaction> {
                     await m.updateCashOut();
                   }
                   Fluttertoast.showToast(msg: 'Added');
+                  if (!mounted) return;
                   pop(context);
                 });
               }
